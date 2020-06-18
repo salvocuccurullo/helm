@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "rosebud-be.fullname" . }}-test-connection"
+  labels:
+{{ include "rosebud-be.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "rosebud-be.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
