@@ -40,6 +40,9 @@ spec:
               containerPort: 8339
               protocol: TCP
           livenessProbe:
+          {{- with .Values.livenessTimings }}
+             {{- toYaml . | nindent 12 }}
+          {{- end }}
             httpGet:
               path: /
               port: http
@@ -47,6 +50,9 @@ spec:
                 {{- toYaml . | nindent 14 }}
               {{- end }}
           readinessProbe:
+            {{- with .Values.readinessTimings }}
+                {{- toYaml . | nindent 12 }}
+            {{- end }}
             httpGet:
               path: /
               port: http
